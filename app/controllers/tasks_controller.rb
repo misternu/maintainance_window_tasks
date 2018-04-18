@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.sort_by(&:created_at)
   end
 
   def show; end
@@ -23,10 +23,11 @@ class TasksController < ApplicationController
   end
 
   def update
+    @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to @task, notice: 'Task was successfully updated.'
+      redirect_to @task, notice: 'Task was successfully updated.' unless request.xhr?
     else
-      render :edit
+      format.html { render action: "edit" }
     end
   end
 

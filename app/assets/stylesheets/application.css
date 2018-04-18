@@ -13,3 +13,27 @@
  *= require_tree .
  *= require_self
  */
+
+.task-container {
+  position: relative;
+  padding: 1px;
+}
+
+form {
+  display: inline-block;
+}
+
+.checkbox {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  /*text-align: center;*/
+  vertical-align: middle;
+  text-align: center;
+  line-height: 20px;
+  background: lightgray;
+}
+
+.checked {
+  background: lightgreen;
+}
