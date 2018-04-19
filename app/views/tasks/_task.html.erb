@@ -1,0 +1,8 @@
+<div class="task-container">
+  <%= form_for task do |f| %>
+    <%= f.hidden_field :done %>
+    <div class='checkbox<%= task.done ? ' checked' : '' %>'></div>
+    <%= f.text_field :title %>
+    <%= link_to 'X', task, method: :delete, class: 'delete' %>
+  <% end %>
+</div>

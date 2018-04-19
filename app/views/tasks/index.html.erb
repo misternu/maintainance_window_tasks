@@ -1,23 +1,5 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Tasks</h1>
-
+<%= link_to '+', new_task_path, id: 'new_task'%>
 <div id="task_list">
-  <% @tasks.each do |task| %>
-    <div class="task-container">
-      <%= form_for task do |f| %>
-        <%= f.hidden_field :done %>
-        <div class='checkbox<%= task.done ? ' checked' : '' %>'></div>
-        <%= f.text_field :title %>
-        <%= link_to 'Edit', edit_task_path(task) %>
-        <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render partial: :task, collection: @tasks %>
 </div>
-
-<br>
-
-<%= link_to 'New Task', new_task_path %>
-
-<!-- "✔️" -->
