@@ -24,10 +24,14 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    if @task.update(task_params)
-      redirect_to @task, notice: 'Task was successfully updated.' unless request.xhr?
-    else
-      format.html { render action: "edit" }
+    respond_to do |format|
+      if @task.update(task_params)
+        format.html { redirect_to @task, notice: 'Task updated.' }
+        format.json { head :ok }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
