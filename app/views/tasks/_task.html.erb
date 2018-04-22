@@ -1,8 +1,12 @@
 <div class="task-container">
-  <%= form_for task do |f| %>
+  <%= form_for task, data: { id: task.id } do |f| %>
     <%= f.hidden_field :done %>
     <div class='checkbox<%= task.done ? ' checked' : '' %>'></div>
     <%= f.text_field :title %>
-    <%= link_to 'X', task, method: :delete, class: 'delete' %>
+    <%= link_to 'X', '#', class: 'delete' %>
+    <%= link_to '+', '#', class: 'new-task' %>
   <% end %>
+  <div class="task-list">
+    <%= render partial: :task, collection: task.tasks.order('created_at DESC') %>
+  </div>
 </div>

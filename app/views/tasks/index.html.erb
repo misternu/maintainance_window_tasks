@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<%= link_to '+', new_task_path, id: 'new_task'%>
-<div id="task_list">
+<%= link_to '+', '#', class: 'new-task'%>
+<div class="task-list">
   <%= render partial: :task, collection: @tasks %>
 </div>

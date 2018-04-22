@@ -16,7 +16,11 @@
 
 .task-container {
   position: relative;
-  padding: 1px;
+  padding-bottom: 1px;
+}
+
+.task-container > .task-list {
+  padding-left: 20px;
 }
 
 form {

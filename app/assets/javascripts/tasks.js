@@ -1,31 +1,42 @@
 document.addEventListener('DOMContentLoaded', function(event) {
-  const newTaskLink = document.getElementById('new_task');
-  const taskList = document.getElementById('task_list');
-  if (taskList) {
-    newTaskLink.addEventListener('click', newTask);
-    taskList.addEventListener('click', event => {
-      if (event.target.classList.contains('checkbox')) {
-        checkTask(event.target.parentNode);
-      } else if (event.target.classList.contains('delete')) {
-        deleteTask(event);
-      }
-    });
-    taskList.addEventListener('change', event => {
-      updateTask(event.target.parentNode);
-    });
-    taskList.addEventListener('submit', event => {
-      event.preventDefault();
-      updateTask(event.target);
-      event.target.querySelector('#task_title').blur();
-    });
-  }
+  document.addEventListener('click', event => {
+    if (event.target.classList.contains('checkbox')) {
+      console.log('CHECK TASK');
+      checkTask(event.target.parentNode);
+    } else if (event.target.classList.contains('delete')) {
+      console.log('DELETE TASK');
+      deleteTask(event);
+    } else if (event.target.classList.contains('new-task')) {
+      console.log('NEW TASK');
+      newTask(event);
+    }
+  });
+  document.addEventListener('change', event => {
+    console.log('UPDATE TASK');
+    updateTask(event.target.parentNode);
+  });
+  document.addEventListener('submit', event => {
+    console.log('UPDATE TASK');
+    updateAndBlur(event);
+  });
 });
+
+const updateAndBlur = event => {
+  event.preventDefault();
+  updateTask(event.target);
+  event.target.querySelector('#task_title').blur();
+};
 
 const newTask = event => {
   event.preventDefault();
-  const firstTask = document.getElementById('task_list').children[0];
-  ajax('POST', '/tasks', { title: 'Task' }, responseText => {
-    firstTask.insertAdjacentHTML('beforebegin', responseText);
+  let taskList = event.target.nextElementSibling;
+  let taskData = { title: 'Task' };
+  if (event.target.parentNode.tagName === 'FORM') {
+    taskData.task_id = event.target.parentNode.dataset.id;
+    taskList = event.target.parentNode.nextElementSibling;
+  }
+  ajax('POST', '/tasks', taskData, responseText => {
+    taskList.insertBefore(htmlToElement(responseText), taskList.children[0]);
   });
 };
 
@@ -72,4 +83,10 @@ const ajax = (type, url, data, callback) => {
   data = Object.assign(data, { authenticity_token: Rails.csrfToken() });
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify(data));
+};
+
+const htmlToElement = html => {
+  const template = document.createElement('div');
+  template.innerHTML = html;
+  return template.firstChild;
 };

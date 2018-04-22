@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
+  include TasksHelper
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order('created_at DESC')
+    @tasks = root_tasks
   end
 
   def show; end
@@ -19,7 +20,7 @@ class TasksController < ApplicationController
       if @task.save
         format.html { redirect_to @task, notice: 'Task created.' }
         format.json do
-          render partial: 'tasks/task.html.erb', locals: {task: @task}
+          render partial: 'tasks/task.html.erb', locals: { task: @task }
         end
       else
         format.html { render action: :new }
@@ -57,6 +58,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :done)
+    params.require(:task).permit(:title, :done, :task_id)
   end
 end
