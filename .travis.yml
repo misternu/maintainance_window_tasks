@@ -1,0 +1,10 @@
+language: ruby
+deploy:
+  provider: heroku
+  app: maintainance-window-tasks
+  api_key:
+    secure: f68468+ryq00CWFqiPkxL2T/CoSvXYyLumWX4/lRiwEJ6ni8SRCTNltCUwHQdSuYaxvXiI2YiIlSLTPwPEoEwFbbc2pWJ8jmv91imPGAJVLIcrstL+vea98SOA2r1LCjsLbtsELC8NNae3Tba1NDpdWofXqM8/2ED2zReMJb7Mm6gmfx4ndk9hSl3s/4rd+Nsq97Kq+FW/06KT0pdYuaKOYBIlftLqwbgvNCiwk9kC+VlS2DdN1gzMVKmtL3oFB/p9pRytE/mw4gVokg1hja1ShwWS937MQwxFkjjc0V83ZGEA9Hww7CGZ1/9R1BpS2+SWUzjRzX0VrNyChcCk6y4eNlC9Z9PgDuSOVcSmxUhVWnpKfRxR/ai/U+DrgHEwCoHETYTrm8TBYI5qkjCtRaESuHJrVqeqIMwrbj4tI+dFdIpUczhxwdzWYBVSUqOsT0IomNAK7Dwu7udK9gzLTycebqp2DWfEuI9cVsiMzyHrNu3qazVgVf0cpqBXbMHQdvpfSGVvjhK/LVv8C462vVCON0+k5DVoFjDk2F3XzaxTnzqNo/TXEKJG3J3ztk1d827x7EQtrZYOJaPQg1D7Smw+DlDvSIxdDF3EJUebFjK9w+DgGjah7I6PlWtNQalkb1fsLss7JJtIM6ahWrD2lCaTl5ce71TteagLBt8JkbDmo=
+  run:
+  - rake db:migrate
+  - rake db:seed
+  - rake cleanup
