@@ -1,16 +1,7 @@
-document.addEventListener('DOMContentLoaded', function(event) {
-  document.addEventListener('click', event => {
-    if (event.target.classList.contains('checkbox')) {
-      console.log('CHECK TASK');
-      checkTask(event.target.parentNode);
-    } else if (event.target.classList.contains('delete')) {
-      console.log('DELETE TASK');
-      deleteTask(event);
-    } else if (event.target.classList.contains('new-task')) {
-      console.log('NEW TASK');
-      newTask(event);
-    }
-  });
+// Document Ready
+document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('touchend', clickables);
+  document.addEventListener('click', clickables);
   document.addEventListener('change', event => {
     console.log('UPDATE TASK');
     updateTask(event.target.parentNode);
@@ -20,6 +11,33 @@ document.addEventListener('DOMContentLoaded', function(event) {
     updateAndBlur(event);
   });
 });
+
+// Event Handlers
+const clickables = event => {
+  if (event.target.classList.contains('checkbox')) {
+    event.preventDefault();
+    clickCheckbox(event);
+  } else if (event.target.classList.contains('delete')) {
+    clickDelete(event);
+  } else if (event.target.classList.contains('new-task')) {
+    clickNew(event);
+  }
+};
+
+const clickCheckbox = event => {
+  console.log('CHECK TASK');
+  checkTask(event.target.parentNode);
+};
+
+const clickDelete = event => {
+  console.log('DELETE TASK');
+  deleteTask(event);
+};
+
+const clickNew = event => {
+  console.log('NEW TASK');
+  newTask(event);
+};
 
 const updateAndBlur = event => {
   event.preventDefault();
@@ -72,6 +90,7 @@ const toggleCheckbox = form => {
   }
 };
 
+// AJAX Helpers
 const ajax = (type, url, data, callback) => {
   const xhr = new XMLHttpRequest();
   xhr.open(type, url + '.json');
